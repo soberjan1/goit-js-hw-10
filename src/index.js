@@ -5,13 +5,16 @@ const refs = {
   catInfoDiv: document.querySelector('cat-info'),
 };
 
-fetchBreeds();
+refs.selectEl.addEventListener('change', () => {
+  fetchBreeds()
+    .then(breeds => renderSelect(breeds))
+    .catch(error => comsole.log(error));
+});
 
-refs.selectEl.addEventListener('change', renderBreedsList);
-function renderBreedsList(breeds) {
+function renderSelect(breeds) {
   const markup = breeds
-    .map(breed => {
-      return '<option value= "${breed.reference_image_id }">${breed.name}</option>';
+    .map(({ reference_image_id, name }) => {
+      return '<option value= "${reference_image_id}">${name}</option>';
     })
     .join('');
   selectEl.innerHTML = markup;
