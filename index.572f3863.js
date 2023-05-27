@@ -1,2 +1,0 @@
-const e={selectEl:document.querySelector(".breed-select"),catInfoDiv:document.querySelector("cat-info")};fetch("https://api.thecatapi.com/v1/breeds",{headers:{"x-api-key":"?api_key=live_YdzUqo3z5NqyWa5NxNxNq2zLwM5Y3I1KhOqtR5Oaqqa5h0K2hA2RnDNiPzcjnOeo"}}).then((e=>{if(!e.ok)throw new Error(e.status);return e.json()})).catch((e=>console.log(e))),e.selectEl.addEventListener("change",(function(e){const t=e.map((e=>'<option value= "${breed.reference_image_id }">${breed.name}</option>')).join("");selectEl.innerHTML=t}));
-//# sourceMappingURL=index.572f3863.js.map
