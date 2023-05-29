@@ -1,21 +1,52 @@
-import { fetchBreeds } from './cat-api.js';
+import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 
-const refs = {
-  selectEl: document.querySelector('.breed-select'),
-  catInfoDiv: document.querySelector('cat-info'),
-};
+const select = document.querySelector('.breed-select');
+const catInfo = document.querySelector('.cat-info');
+const loader = document.querySelector('.loader');
+const error = document.querySelector('.error');
 
-refs.selectEl.addEventListener('change', () => {
-  fetchBreeds()
-    .then(breeds => renderSelect(breeds))
-    .catch(error => comsole.log(error));
+error.setAttribute('hidden', '');
+loader.classList.add('hidden');
+
+fetchBreeds()
+  .then(data => {
+    const murkup = data
+      .map(cat => `<option value="${cat.id}">${cat.name}</option>`)
+      .join('');
+    select.innerHTML = murkup;
+  })
+  .catch(error => {
+    error.removeAttribute('hidden', '');
+    console.log(error);
+  });
+
+select.addEventListener('change', elem => {
+  loader.classList.remove('hidden');
+  fetchCatByBreed(elem.target.value)
+    .then(data => {
+      catInfo.innerHTML = createMurkup(data);
+    })
+    .catch(error => {
+      error.classList.remove('hidden');
+      console.log(error);
+    });
 });
 
-function renderSelect(breeds) {
-  const markup = breeds
-    .map(({ reference_image_id, name }) => {
-      return '<option value= "${reference_image_id}">${name}</option>';
-    })
+function createMurkup(cat) {
+  loader.classList.add('hidden');
+  const murkup = cat
+    .map(
+      cat =>
+        `   <img class="cat-img" src="${cat.url}" width="350"/>
+                <div class="cat-description">
+                <h2 class="name-cat">${cat.breeds[0].name}</h2>
+                <p class="description">${cat.breeds[0].description}</p>
+                <p>
+                <h3 class="name-cat">Temperament:</h3> 
+                ${cat.breeds[0].temperament}</p>
+            </div>                        
+        `
+    )
     .join('');
-  selectEl.innerHTML = markup;
+  return murkup;
 }
