@@ -1,5 +1,6 @@
 body {
-  background-color: rgb(255, 120, 120);
+  /* background-color: rgb(232, 190, 190); */
+  background: linear-gradient(45deg, #eecfba, #c5dde8);
 }
 .cat-info {
   display: flex;
@@ -9,11 +10,16 @@ body {
 
 .cat-img {
   display: block;
+  border-radius: 10px;
 }
 
 .cat-description {
-  margin-left: 10px;
-  max-width: 300px;
+  background-color: #fff;
+
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 10px;
+  max-width: 350px;
 }
 
 .hidden {
